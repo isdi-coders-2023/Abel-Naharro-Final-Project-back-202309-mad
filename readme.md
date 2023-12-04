@@ -1,10 +1,13 @@
 # Todotecnofertas - Backend
 
-> Todotecnofertas is a social web app specialized in sharing online offers about technology.
-
 _By Abel Naharro_ 😁👍 <a href="https://www.linkedin.com/in/abelnaharro/" target="blank">
 <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@10.1.0/icons/linkedin.svg" alt="Linkedin Abel Naharro" height="30" width="40"/>Linkedin</a> <a href="https://github.com/abelnhm" target="blank">
 <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@10.1.0/icons/github.svg" alt="Github Abel Naharro" height="30" width="40"/>Github</a>
+
+> Todotecnofertas is a social web app specialized in sharing online offers about technology.
+
+<a href="https://sonarcloud.io/summary/overall?id=isdi-coders-2023_Abel-Naharro-Final-Project-back-202309-mad" target="blank">
+<img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@10.1.0/icons/sonarcloud.svg" alt="Project information on sonarcloud" height="30" width="40"/>SonarCloud</a>
 
 ## Technologies used:
 
