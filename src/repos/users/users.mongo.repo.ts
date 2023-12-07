@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { LoginUser, User } from '../../entities/user';
 import { UserModel } from './users.mongo.model.js';
-// Import { UserModel } from './users.mongo.model.js';
+import { HttpError } from '../../types/http.error.js';
 const debugServer = createDebug('LOG:REPO:USERS');
 
 export class UsersMongoRepo {
@@ -14,9 +14,10 @@ export class UsersMongoRepo {
       email: loginUser.email,
     }).exec();
 
-    if (!result || loginUser.password !== result.password)
-      throw new Error('Invalid credentials');
     debugServer('Login result:', result);
+    if (!result || loginUser.password !== result.password)
+      throw new HttpError(401, 'Unauthorized', 'Login not possible');
+
     return result;
   }
 

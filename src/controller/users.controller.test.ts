@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { UsersController } from './users.controller.js';
 import { UsersMongoRepo } from '../repos/users/users.mongo.repo.js';
 import { User } from '../entities/user.js';
+import { HttpError } from '../types/http.error.js';
 
 describe('Given UserController class', () => {
   let controller: UsersController;
@@ -41,7 +42,9 @@ describe('Given UserController class', () => {
   });
 
   describe('When we instantiate it with errors', () => {
-    const mockError = new Error('Invalid body');
+    let mockError = {} as unknown as HttpError;
+
+    // Const mockError = new Error('Bad Request');
     const mockRepoError = {
       login: jest.fn().mockRejectedValue({}),
       create: jest.fn().mockRejectedValue({}),
@@ -52,44 +55,40 @@ describe('Given UserController class', () => {
     const next = jest.fn() as NextFunction;
 
     test('Then login should error...', async () => {
+      mockError = new HttpError(400, 'Bad Request');
       await controller.login(req, res, next);
       expect(next).toHaveBeenCalledWith(mockError);
-    });
-
-    test('Then the login without request body param should', async () => {
-      await controller.login(req, res, next);
-      expect(next).toHaveBeenCalledWith(mockError);
-    });
-
-    test('Then create should error...', async () => {
-      const mockDataCreate = {} as unknown as User;
-      mockRequest.body = {
-        mockDataCreate,
-      } as unknown as Request;
-      const mockRepo = {
-        create: await jest.fn().mockRejectedValue(mockError),
-      } as unknown as UsersMongoRepo;
-      const controller = new UsersController(mockRepo);
-
-      await controller.create(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(mockError);
-    });
-    test('Then create should error...', async () => {
-      const mockDataCreate = {} as unknown as User;
-      mockRequest.body = {
-        mockDataCreate,
-      } as unknown as Request;
-      const mockRepo = {
-        create: await jest.fn().mockRejectedValue(mockError),
-      } as unknown as UsersMongoRepo;
-      const controller = new UsersController(mockRepo);
-
-      await controller.create(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(mockError);
     });
     test('Then the create without request body param should', async () => {
       await controller.create(req, res, next);
       expect(next).toHaveBeenCalledWith(mockError);
+    });
+
+    test('Then create should error...', async () => {
+      const mockDataCreate = {} as unknown as User;
+      mockRequest.body = {
+        mockDataCreate,
+      } as unknown as Request;
+      const mockRepo = {
+        create: await jest.fn().mockRejectedValue(mockError),
+      } as unknown as UsersMongoRepo;
+      const controller = new UsersController(mockRepo);
+
+      await controller.create(mockRequest, mockResponse, mockNext);
+      expect(mockNext).toHaveBeenCalledWith(mockError);
+    });
+    test('Then create should error...', async () => {
+      const mockDataCreate = {} as unknown as User;
+      mockRequest.body = {
+        mockDataCreate,
+      } as unknown as Request;
+      const mockRepo = {
+        create: await jest.fn().mockRejectedValue(mockError),
+      } as unknown as UsersMongoRepo;
+      const controller = new UsersController(mockRepo);
+
+      await controller.create(mockRequest, mockResponse, mockNext);
+      expect(mockNext).toHaveBeenCalledWith(mockError);
     });
   });
 });

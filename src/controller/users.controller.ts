@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
 import { UsersMongoRepo } from '../repos/users/users.mongo.repo.js';
+import { HttpError } from '../types/http.error.js';
 
 const debugServer = createDebug('LOG:CONTROLLER:USERS');
 
@@ -13,7 +14,8 @@ export class UsersController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       debugServer('Controller body login:', req.body);
-      if (!req.body) throw new Error('Invalid body');
+      // If (!req.body) throw new Error('Invalid body');
+      if (!req.body) throw new HttpError(400, 'Bad Request');
       const result = await this.repo.login(req.body);
       const data = {
         user: result,
@@ -30,7 +32,7 @@ export class UsersController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       debugServer('Controller body create:', req.body);
-      if (!req.body) throw new Error('Request is required');
+      if (!req.body) throw new HttpError(400, 'Bad Request');
       const result = await this.repo.create(req.body);
       debugServer('Controller result create:', result);
       res.status(201);
