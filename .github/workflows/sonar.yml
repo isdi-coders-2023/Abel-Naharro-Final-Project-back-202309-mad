@@ -16,7 +16,7 @@ jobs:
       - name: Install modules
         run: npm ci
       - name: Testing in production with coverage
-        run: npm run test:prod #Change for a valid npm
+        run: npm run test:pro #Change for a valid npm
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
