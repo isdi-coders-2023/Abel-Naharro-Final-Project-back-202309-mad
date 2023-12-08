@@ -29,7 +29,9 @@ describe('Given UserController class', () => {
   describe('When we instantiate it without errors', () => {
     test('Then login should...', async () => {
       await controller.login(mockRequest, mockResponse, mockNext);
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.statusMessage).toBe('Accepted');
+      // Expect(mockResponse.json).toHaveBeenCalledWith({};)
     });
     test('Then create should...', async () => {
       await controller.create(mockRequest, mockResponse, mockNext);
