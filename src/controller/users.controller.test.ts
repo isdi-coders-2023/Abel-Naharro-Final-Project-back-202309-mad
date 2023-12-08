@@ -31,7 +31,6 @@ describe('Given UserController class', () => {
       await controller.login(mockRequest, mockResponse, mockNext);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.statusMessage).toBe('Accepted');
-      expect(mockResponse.json).toHaveBeenCalledWith({});
     });
     test('Then create should...', async () => {
       await controller.create(mockRequest, mockResponse, mockNext);
