@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../types/http.error.js';
 import { Auth } from '../services/auth.js';
 import createDebug from 'debug';
-const debugServer = createDebug('LOG:MIDDLEWARE:INTERCEPTOR');
+const debugServer = createDebug('LOG:MIDDLEWARE:AUTH INTERCEPTOR');
 
 export class AuthInterceptor {
   constructor() {
