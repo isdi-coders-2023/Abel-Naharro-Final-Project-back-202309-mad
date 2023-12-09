@@ -3,12 +3,16 @@ import createDebug from 'debug';
 import { OffersMongoRepo } from '../repos/offers/offers.mongo.repo.js';
 import { HttpError } from '../types/http.error.js';
 // Import { Auth } from '../services/auth.js';
+import { CloudinaryMediaFiles } from '../services/cloudinary.media.files.js';
 
 const debugServer = createDebug('LOG:CONTROLLER:OFFERS');
 
 export class OffersController {
+  cloudinaryService: CloudinaryMediaFiles;
+
   constructor(private repo: OffersMongoRepo) {
     this.repo = repo;
+    this.cloudinaryService = new CloudinaryMediaFiles();
     debugServer('Starting controller...');
   }
 
@@ -70,6 +74,19 @@ export class OffersController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
+      if (!req.file) throw new HttpError(400, 'Image is required');
+      const imgData = await this.cloudinaryService.uploadImage(req.file.path);
+
+      req.body.image = {
+        publicId: req.file?.filename,
+        format: req.file?.mimetype,
+        url: req.file?.path,
+        size: req.file?.size,
+        cloudinaryURL: imgData.url,
+      };
+
+      debugServer('Controller-create:', req.body.image);
+
       if (!req.body) throw new HttpError(406, 'Not Acceptable', 'Invalid body');
       const result = await this.repo.create(req.body);
       res.status(201);

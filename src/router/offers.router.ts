@@ -6,6 +6,7 @@ import { OffersController } from '../controller/offers.controller.js';
 import { AuthInterceptor } from '../middleware/auth.interceptor.js';
 import { VotesMongoRepo } from '../repos/votes/votes.mongo.repo.js';
 import { VotesController } from '../controller/votes.controller.js';
+import { FileInterceptor } from '../middleware/file.interceptor.js';
 
 const debugServer = createDebug('LOG:ROUTER:OFFERS');
 
@@ -16,6 +17,7 @@ const offerController = new OffersController(offerRepo);
 const voteRepo = new VotesMongoRepo();
 const voteController = new VotesController(voteRepo);
 const interceptor = new AuthInterceptor();
+const fileInterceptor = new FileInterceptor();
 
 debugServer('Starting router...');
 
@@ -35,12 +37,14 @@ offersRouter.get(
 
 offersRouter.post(
   '/',
+  fileInterceptor.singleFileStore('image').bind(fileInterceptor),
   interceptor.authorization.bind(interceptor),
   offerController.create.bind(offerController)
 );
 
 offersRouter.patch(
   '/:id',
+  fileInterceptor.singleFileStore('image').bind(fileInterceptor),
   interceptor.authorization.bind(interceptor),
   offerController.update.bind(offerController)
 );

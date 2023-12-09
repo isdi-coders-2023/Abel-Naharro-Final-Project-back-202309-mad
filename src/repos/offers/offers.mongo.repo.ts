@@ -4,7 +4,7 @@ import { Offer } from '../../entities/offer';
 import { OfferModel } from './offers.mongo.model.js';
 import { HttpError } from '../../types/http.error.js';
 // Import { Vote } from '../../entities/vote.js';
-const debugServer = createDebug('LOG:REPO:USERS');
+const debugServer = createDebug('LOG:REPO:OFFERS');
 
 export class OffersMongoRepo {
   constructor() {

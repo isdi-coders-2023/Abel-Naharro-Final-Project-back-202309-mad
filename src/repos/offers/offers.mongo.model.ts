@@ -7,7 +7,15 @@ const offersSchema = new Schema<Offer>({
     ref: 'User',
   },
   title: { type: String },
-  image: { type: String },
+  image: {
+    publicId: String,
+    size: Number,
+    width: Number,
+    height: Number,
+    format: String,
+    url: String,
+    cloudinaryURL: String,
+  },
   description: { type: String },
   regularPrice: { type: Number },
   offerPrice: { type: Number },
@@ -22,6 +30,7 @@ const offersSchema = new Schema<Offer>({
 });
 //  Id: { type: String },
 // Image: ImageData;
+// image: {type: String},
 // Image: {
 //   publicId: String,
 //   size: Number,
