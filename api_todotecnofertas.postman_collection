@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "5e4444b3-44ed-4a74-a884-7dee925787b0",
+		"name": "API Todotecnofertas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27529043"
+	},
+	"item": [
+		{
+			"name": "USER - CREATE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"abelDEV4\",\r\n  \"email\": \"abel4@example.com\",\r\n  \"image\": \"test.jpg\",\r\n  \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "USER - LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"abel3@example.com\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/offer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - Create without file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzFkOTNiZGZhN2UxOTMzMjdjOTRkNSIsImVtYWlsIjoiYWJlbDNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MDIwNzQ0OTB9.KdCBZAyZjuPg1wLhPxWb4FKFZqSjgAxTGkdZalJiWWE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"author\": {\"_id\": \"6571d93bdfa7e193327c94d5\"},\r\n  \"title\": \"Xiomi 13 Pro\",\r\n  \"image\": \"google\",\r\n  \"description\": \"Móvil de última generación\",\r\n  \"regularPrice\": 100,\r\n  \"offerPrice\": 50,\r\n  \"isCoupon\": false,\r\n  \"coupon\": \"\",\r\n  \"offerURL\": \"amazon.com\",\r\n  \"category\": \"mobiles\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/offer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - Create with file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzFkOTNiZGZhN2UxOTMzMjdjOTRkNSIsImVtYWlsIjoiYWJlbDNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MDIwNzQ0OTB9.KdCBZAyZjuPg1wLhPxWb4FKFZqSjgAxTGkdZalJiWWE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "author",
+							"value": "6571d93bdfa7e193327c94d5",
+							"description": "{\"_id\": \"6571d93bdfa7e193327c94d5\"}",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Xiomi 13 Pro",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/abeln/Desktop/ISDI Project/imgs/OIP.jpg"
+						},
+						{
+							"key": "description",
+							"value": "Móvil de última generación",
+							"type": "text"
+						},
+						{
+							"key": "regularPrice",
+							"value": "100",
+							"type": "text"
+						},
+						{
+							"key": "offerPrice",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "isCoupon",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "coupon",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "offerURL",
+							"value": "amazon.com",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "mobiles",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3030/offer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - By user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/offer/user/6571d93bdfa7e193327c94d5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer",
+						"user",
+						"6571d93bdfa7e193327c94d5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - By Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/offer/category/mobiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer",
+						"category",
+						"mobiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - By id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/offer/65739e82e96335be6bc9597b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer",
+						"65739e82e96335be6bc9597b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzFkOTNiZGZhN2UxOTMzMjdjOTRkNSIsImVtYWlsIjoiYWJlbDNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MDIwNzQ0OTB9.KdCBZAyZjuPg1wLhPxWb4FKFZqSjgAxTGkdZalJiWWE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Redmi Note 13 Pro\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/offer/65739e82e96335be6bc9597b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer",
+						"65739e82e96335be6bc9597b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzFkOTNiZGZhN2UxOTMzMjdjOTRkNSIsImVtYWlsIjoiYWJlbDNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MDIwNzQ0OTB9.KdCBZAyZjuPg1wLhPxWb4FKFZqSjgAxTGkdZalJiWWE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/offer/65739e82e96335be6bc9597b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer",
+						"65739e82e96335be6bc9597b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OFFER - Add vote",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzFkOTNiZGZhN2UxOTMzMjdjOTRkNSIsImVtYWlsIjoiYWJlbDNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MDIwNzk1Mzd9.bPVoyQc961ykiwIejO3_a5P7Q7bZOsVYwdImZC-ClC8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": {\"_id\": \"6571d93bdfa7e193327c94d5\"},\r\n  \"offer\": {\"_id\": \"6573a053c9d41049327bc1ae\"},\r\n  \"isPositive\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/offer/vote/6571d93bdfa7e193327c94d5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"offer",
+						"vote",
+						"6571d93bdfa7e193327c94d5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
