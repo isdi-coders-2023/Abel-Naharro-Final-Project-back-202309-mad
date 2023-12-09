@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../types/http.error.js';
 import { Auth } from '../services/auth.js';
 import createDebug from 'debug';
+// Import { UsersMongoRepo } from '../repos/users/users.mongo.repo.js';
 const debugServer = createDebug('LOG:MIDDLEWARE:AUTH INTERCEPTOR');
 
 export class AuthInterceptor {
@@ -22,4 +23,18 @@ export class AuthInterceptor {
       next(error);
     }
   }
+
+  // Async authentication(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const userID = req.body.id;
+  //     const userToAddID = req.params.id;
+  //     const repoUsers = new UsersMongoRepo();
+  //     const user = await repoUsers.getById(userToAddID);
+  //     if (user.id !== userID)
+  //       throw new HttpError(401, 'Unauthorized', 'User not valid');
+  //     next();
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 }
