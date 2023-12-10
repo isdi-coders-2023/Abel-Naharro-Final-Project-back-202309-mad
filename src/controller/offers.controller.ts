@@ -87,7 +87,7 @@ export class OffersController {
 
       debugServer('Controller-create:', req.body.image);
 
-      if (!req.body) throw new HttpError(406, 'Not Acceptable', 'Invalid body');
+      if (!req.body) throw new HttpError(406, 'Invalid body');
       const result = await this.repo.create(req.body);
       res.status(201);
       res.statusMessage = 'Created';
@@ -99,7 +99,7 @@ export class OffersController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      if (!req.body) throw new HttpError(406, 'Not Acceptable', 'Invalid body');
+      if (!req.body) throw new HttpError(406, 'Invalid body');
       const result = await this.repo.update(req.params.id, req.body);
       res.status(200);
       res.statusMessage = 'Updated';
