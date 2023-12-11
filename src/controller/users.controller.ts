@@ -12,6 +12,20 @@ export class UsersController {
     debugServer('Starting controller...');
   }
 
+  async getById(req: Request, res: Response, next: NextFunction) {
+    try {
+      debugServer('Controller body getById:', req.params.id);
+      if (!req.params.id) throw new HttpError(400, 'Bad Request');
+      const result = await this.repo.getById(req.params.id);
+      debugServer('Controller result create:', result);
+      res.status(200);
+      res.statusMessage = 'Accepted';
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       debugServer('Controller body login:', req.body);
