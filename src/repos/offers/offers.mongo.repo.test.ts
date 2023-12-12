@@ -77,7 +77,7 @@ describe('Given OffersMongoRepo class', () => {
       expect(result).toEqual(resultValue);
     });
   });
-  describe('When I call method without errors', () => {
+  describe('When I call method with errors', () => {
     beforeEach(() => {
       const mockQueryMethodFindOne = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue([] as Offer[]),

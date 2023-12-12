@@ -8,7 +8,7 @@ describe('AuthInterceptor', () => {
     test('should handle valid Bearer token', async () => {
       const mockRequest = {
         get: jest.fn().mockReturnValue('Bearer mockToken'),
-        verifyJWT: jest.fn().mockReturnValue({} as TokenPayload),
+        body: { id: '1' },
       } as unknown as Request;
       Auth.verifyJWT = jest.fn().mockResolvedValue({} as TokenPayload);
       const mockResponse = new Response() as unknown as Response;

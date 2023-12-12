@@ -10,6 +10,12 @@ export class UsersMongoRepo {
     debugServer('Instantiated repo...');
   }
 
+  async getById(id: string): Promise<User> {
+    const result = await UserModel.findById(id).exec();
+    if (!result) throw new HttpError(404, 'Not Found');
+    return result;
+  }
+
   async login(loginUser: LoginUser): Promise<User> {
     const result = await UserModel.findOne({
       email: loginUser.email,

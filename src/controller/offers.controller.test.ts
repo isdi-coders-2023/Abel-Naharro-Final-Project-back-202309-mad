@@ -22,7 +22,7 @@ describe('Given OfferController class', () => {
 
     const mockRequest = {
       body: {},
-      params: {},
+      params: { id: '1' },
       query: { key: 'value' },
     } as unknown as Request;
     const mockResponse = {
@@ -58,7 +58,7 @@ describe('Given OfferController class', () => {
 
     test('getById', async () => {
       await controller.getById(mockRequest, mockResponse, mockNext);
-      // Expect(mockRepo.getById).toHaveBeenCalled();
+
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.statusMessage).toBe('Accepted');
       expect(mockResponse.json).toHaveBeenCalledWith({});
