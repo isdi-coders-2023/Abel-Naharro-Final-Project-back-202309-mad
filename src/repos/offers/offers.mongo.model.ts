@@ -19,7 +19,7 @@ const offersSchema = new Schema<Offer>({
   description: { type: String },
   regularPrice: { type: Number },
   offerPrice: { type: Number },
-  isCoupon: { type: Boolean },
+  isCoupon: { type: Boolean, default: true },
   coupon: { type: String },
   offerURL: { type: String },
   category: { type: String },
