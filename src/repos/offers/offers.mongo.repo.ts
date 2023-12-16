@@ -12,12 +12,12 @@ export class OffersMongoRepo {
   }
 
   async getAll(): Promise<Offer[]> {
-    const result = await OfferModel.find().exec();
+    const result = await OfferModel.find().populate('author').exec();
     return result;
   }
 
   async getById(id: string): Promise<Offer> {
-    const result = await OfferModel.findById(id).exec();
+    const result = await OfferModel.findById(id).populate('author').exec();
     if (!result) throw new HttpError(404, 'Not Found', 'Not possible');
     return result;
   }
@@ -36,8 +36,24 @@ export class OffersMongoRepo {
 
   async create(offer: Omit<Offer, 'id'>): Promise<Offer> {
     debugServer('Repo create:', offer);
-    const result: Offer = await OfferModel.create(offer);
-    return result;
+
+    try {
+      const userID = offer.author.id;
+
+      if (!userID) {
+        throw new HttpError(400, 'Bad Request', 'Author ID is missing');
+      }
+
+      const result: Offer = await OfferModel.create({
+        ...offer,
+        author: userID,
+      });
+
+      return result;
+    } catch (error) {
+      console.error('Error in create method:', error);
+      throw error;
+    }
   }
 
   async update(id: string, updatedItem: Partial<Offer>): Promise<Offer> {

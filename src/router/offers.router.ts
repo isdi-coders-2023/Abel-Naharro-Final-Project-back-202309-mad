@@ -44,19 +44,22 @@ offersRouter.post(
 
 offersRouter.patch(
   '/:id',
-  fileInterceptor.singleFileStore('image').bind(fileInterceptor),
   interceptor.authorization.bind(interceptor),
+  interceptor.authentication.bind(interceptor),
+  fileInterceptor.singleFileStore('image').bind(fileInterceptor),
   offerController.update.bind(offerController)
 );
 
 offersRouter.delete(
   '/:id',
   interceptor.authorization.bind(interceptor),
+  interceptor.authentication.bind(interceptor),
   offerController.delete.bind(offerController)
 );
 
 offersRouter.post(
   '/vote/:id',
   interceptor.authorization.bind(interceptor),
+  interceptor.authentication.bind(interceptor),
   offerController.create.bind(voteController)
 );

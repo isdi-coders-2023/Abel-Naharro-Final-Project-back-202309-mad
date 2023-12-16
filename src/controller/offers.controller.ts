@@ -74,6 +74,8 @@ export class OffersController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
+      req.body.author = { id: req.body.userId };
+
       if (!req.file) throw new HttpError(400, 'Image is required');
       const imgData = await this.cloudinaryService.uploadImage(req.file.path);
 

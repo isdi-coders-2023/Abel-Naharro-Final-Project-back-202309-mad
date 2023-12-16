@@ -3,6 +3,7 @@ import createDebug from 'debug';
 import { UsersMongoRepo } from '../repos/users/users.mongo.repo.js';
 import { HttpError } from '../types/http.error.js';
 import { Auth } from '../services/auth.js';
+import { LoginResponse } from '../types/login.response.js';
 
 const debugServer = createDebug('LOG:CONTROLLER:USERS');
 
@@ -29,13 +30,19 @@ export class UsersController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       debugServer('Controller body login:', req.body);
-      // If (!req.body) throw new Error('Invalid body');
-      if (!req.body) throw new HttpError(400, 'Bad Request');
-      const result = await this.repo.login(req.body);
-      const data = {
+
+      const result = req.body.userId
+        ? await this.repo.getById(req.body.userId)
+        : await this.repo.login(req.body);
+
+      const data: LoginResponse = {
         user: result,
-        token: Auth.signJWT({ id: result.id, email: result.email }),
+        token: Auth.signJWT({
+          id: result.id,
+          email: result.email,
+        }),
       };
+
       debugServer('Controller result login:', data);
       res.status(200);
       res.statusMessage = 'Accepted';
