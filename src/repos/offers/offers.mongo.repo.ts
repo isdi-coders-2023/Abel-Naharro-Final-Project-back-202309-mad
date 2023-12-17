@@ -12,7 +12,10 @@ export class OffersMongoRepo {
   }
 
   async getAll(): Promise<Offer[]> {
-    const result = await OfferModel.find().populate('author').exec();
+    const result = await OfferModel.find()
+      .sort({ _id: -1 })
+      .populate('author')
+      .exec();
     return result;
   }
 
@@ -61,7 +64,9 @@ export class OffersMongoRepo {
       throw new HttpError(406, 'Not Acceptable', 'Id not match');
     const result = await OfferModel.findByIdAndUpdate(id, updatedItem, {
       new: true,
-    }).exec();
+    })
+      .populate('author')
+      .exec();
     if (!result) throw new HttpError(404, 'Not Found', 'Update not possible');
     return result;
   }
