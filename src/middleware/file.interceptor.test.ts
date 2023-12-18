@@ -4,7 +4,6 @@ import multer from 'multer';
 
 jest.mock('multer');
 describe('Given FileInterceptor class', () => {
-  // Given
   const midlewareMock = jest.fn();
   const single = jest.fn().mockReturnValue(midlewareMock);
   multer.diskStorage = jest

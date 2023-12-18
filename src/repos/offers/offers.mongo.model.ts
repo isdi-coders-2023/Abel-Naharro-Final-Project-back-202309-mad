@@ -28,18 +28,6 @@ const offersSchema = new Schema<Offer>({
   createdAt: { type: Number, default: Date.now() },
   updatedAt: { type: Number, default: Date.now() },
 });
-//  Id: { type: String },
-// Image: ImageData;
-// image: {type: String},
-// Image: {
-//   publicId: String,
-//   size: Number,
-//   width: Number,
-//   height: Number,
-//   format: String,
-//   url: String,
-//   cloudinaryURL: String,
-// },
 
 offersSchema.set('toJSON', {
   transform(_doc, returnedObject) {

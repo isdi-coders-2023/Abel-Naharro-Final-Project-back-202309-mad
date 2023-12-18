@@ -1,6 +1,5 @@
 import { Vote } from '../../entities/vote.js';
 import { VoteModel } from './votes.mongo.model.js';
-// Import { Vote } from '../../entities/vote.js';
 import { VotesMongoRepo } from './votes.mongo.repo.js';
 
 jest.mock('./votes.mongo.model.js');

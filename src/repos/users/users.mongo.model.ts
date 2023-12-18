@@ -10,16 +10,6 @@ const usersSchema = new Schema<User>({
   updatedAt: { type: Number, default: Date.now() },
 });
 
-// Image: {
-//   publicId: String,
-//   size: Number,
-//   width: Number,
-//   height: Number,
-//   format: String,
-//   url: String,
-//   cloudinaryURL: String,
-// },
-
 usersSchema.set('toJSON', {
   transform(_doc, returnedObject) {
     returnedObject.id = returnedObject._id;

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryMediaFiles } from './cloudinary.media.files.js';
-import { HttpError } from '../types/http.error.js';
+// Import { HttpError } from '../types/http.error.js';
 describe('Given the Media File class', () => {
   describe('When I use upload a image', () => {
     test('should upload an image successfully when given a valid imagePath', async () => {

@@ -42,7 +42,6 @@ describe('Given UserController class', () => {
       await controller.login(mockRequest, mockResponse, mockNext);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.statusMessage).toBe('Accepted');
-      // Expect(mockResponse.json).toHaveBeenCalledWith({};)
     });
     test('Then login with userId should...', async () => {
       mockRequest.body.userId = '1';
@@ -61,7 +60,6 @@ describe('Given UserController class', () => {
   describe('When we instantiate it with errors', () => {
     let mockError = {} as unknown as HttpError;
 
-    // Const mockError = new Error('Bad Request');
     const mockRepoError = {
       getById: jest.fn().mockRejectedValue({}),
       login: jest.fn().mockRejectedValue({}),

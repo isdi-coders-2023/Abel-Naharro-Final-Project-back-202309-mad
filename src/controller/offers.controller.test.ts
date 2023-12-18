@@ -5,7 +5,6 @@ import { OffersController } from './offers.controller.js';
 import { Offer } from '../entities/offer.js';
 
 jest.mock('../services/cloudinary.media.files.js');
-// Jest.mock('../repos/offers/offers.mongo.repo.js');
 
 describe('Given OfferController class', () => {
   describe('When I call the method', () => {

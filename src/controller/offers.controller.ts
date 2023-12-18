@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
 import { OffersMongoRepo } from '../repos/offers/offers.mongo.repo.js';
 import { HttpError } from '../types/http.error.js';
-// Import { Auth } from '../services/auth.js';
 import { CloudinaryMediaFiles } from '../services/cloudinary.media.files.js';
 
 const debugServer = createDebug('LOG:CONTROLLER:OFFERS');

@@ -1,7 +1,6 @@
 import { Offer } from '../../entities/offer';
 import { HttpError } from '../../types/http.error';
 import { OfferModel } from './offers.mongo.model.js';
-// Import { HttpError } from '../../types/http.error.js';
 import { OffersMongoRepo } from './offers.mongo.repo.js';
 
 jest.mock('./offers.mongo.model.js');
@@ -97,25 +96,6 @@ describe('Given OffersMongoRepo class', () => {
   });
 
   describe('When I call method with errors', () => {
-    // Test('getById', async () => {
-    //   OfferModel.findById = jest.fn().mockReturnValue({
-    //     populate: jest.fn().mockReturnValue({
-    //       exec: jest.fn().mockRejectedValue(false),
-    //     }),
-    //   });
-
-    //   try {
-    //     await repo.getById('');
-    //     throw new HttpError(404, 'Not Found', 'Not possible');
-    //   } catch (error) {
-    //     const httpError = error as HttpError;
-    //     expect(httpError).toBeInstanceOf(HttpError);
-    //     expect(httpError.status).toBe(400);
-    //     expect(httpError.statusMessage).toBe('Bad Request');
-    //     expect(httpError.message).toBe('Author ID is missing');
-    //   }
-    // });
-
     test('create without userID', async () => {
       const mockUserID = { author: {} } as unknown as Offer;
 

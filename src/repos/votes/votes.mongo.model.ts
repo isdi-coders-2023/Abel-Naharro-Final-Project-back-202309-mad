@@ -15,8 +15,6 @@ const votesSchema = new Schema<Vote>({
   updatedAt: { type: Number, default: Date.now() },
 });
 
-//  Id: { type: String },
-
 votesSchema.set('toJSON', {
   transform(_doc, returnedObject) {
     returnedObject.id = returnedObject._id;
