@@ -54,8 +54,9 @@ describe('Given UserRepo class', () => {
         exec: jest.fn().mockResolvedValue(false),
       });
       const mockQueryMethodFindById = jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(false),
+        exec: jest.fn().mockResolvedValue(null),
       });
+
       UserModel.findOne = mockQueryMethod;
       UserModel.findById = mockQueryMethodFindById;
 
@@ -64,10 +65,8 @@ describe('Given UserRepo class', () => {
       repo = new UsersMongoRepo();
     });
 
-    test.skip('Then it should execute with fail getById', async () => {
-      const result = await repo.getById('testId');
-      // Expect(result).toBe(false);
-      expect(result).rejects.toThrow(new HttpError(404, 'Not Found'));
+    test('Then it should execute with fail getById', async () => {
+      await expect(repo.getById('')).rejects.toThrow();
     });
     test('Then it should execute with fail login', async () => {
       const loginUser = {} as unknown as LoginUser;

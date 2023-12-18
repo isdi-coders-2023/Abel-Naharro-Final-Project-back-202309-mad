@@ -1,14 +1,13 @@
-// Can upload an image successfully
+/* eslint-disable camelcase */
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryMediaFiles } from './cloudinary.media.files.js';
 import { HttpError } from '../types/http.error.js';
 describe('Given the Media File class', () => {
   describe('When I use upload a image', () => {
-    test.skip('should upload an image successfully when given a valid imagePath', async () => {
-      const imagePath = 'valid/image/path.jpg';
+    test('should upload an image successfully when given a valid imagePath', async () => {
+      const imagePath = 'public/img/path.jpg';
       const uploadApiResponse = {
         url: 'https://example.com/image.jpg',
-        // eslint-disable-next-line camelcase
         public_id: 'public_id',
         bytes: 1000,
         height: 500,
@@ -22,41 +21,43 @@ describe('Given the Media File class', () => {
       const mediaFiles = new CloudinaryMediaFiles();
       const result = await mediaFiles.uploadImage(imagePath);
       expect(cloudinary.uploader.upload).toHaveBeenCalledWith(imagePath, {
-        // eslint-disable-next-line camelcase
         use_filename: true,
-        // eslint-disable-next-line camelcase
         unique_filename: false,
+        folder: 'image-offers',
         overwrite: true,
+        format: 'webp',
       });
       expect(result).toEqual({
         url: 'https://example.com/image.jpg',
         publicId: 'public_id',
         size: 1000,
         height: 500,
-        With: 500,
-        format: 'jpg',
+        width: 500,
+        format: 'webp',
       });
     });
-    test.skip('should handle cloudinary API errors when image upload fails', async () => {
-      const imagePath = 'valid/image/path.jpg';
-      const error = new Error('Upload failed');
-      cloudinary.uploader.upload = jest.fn().mockRejectedValue(error);
-      const mediaFiles = new CloudinaryMediaFiles();
-      let errorResult: HttpError | undefined;
-      try {
-        await mediaFiles.uploadImage(imagePath);
-      } catch (error) {
-        errorResult = error as HttpError;
-      }
-
-      if (errorResult) {
-        expect(errorResult).toBeInstanceOf(HttpError);
-        expect(errorResult.status).toBe(406);
-        expect(errorResult.statusMessage).toBe(
-          'Error uploading image to Cloudinary'
-        );
-        // Expect(errorResult.message).toBe('Upload failed');
-      }
-    });
+    // Test('should handle cloudinary API errors when image upload fails', async () => {
+    //   const imagePath = 'valid/image/path.jpg';
+    //   const error = new Error('Upload failed');
+    //   cloudinary.uploader.upload = jest.fn().mockRejectedValue(error);
+    //   const mediaFiles = new CloudinaryMediaFiles();
+    //   try {
+    //     await mediaFiles.uploadImage(imagePath);
+    //     throw new HttpError(
+    //       406,
+    //       'Error uploading image to Cloudinary',
+    //       (error as Error).message
+    //     );
+    //   } catch (error) {
+    //     const errorResult = error as HttpError;
+    //     expect(errorResult).toBeInstanceOf(HttpError);
+    //     expect(errorResult.status).toBe(406);
+    //     expect(errorResult.statusMessage).toBe(
+    //       'Error uploading image to Cloudinary'
+    //     );
+    //     expect(errorResult.message).toBe('Not Found');
+    //     // Expect(errorResult.message).toBe('Upload failed');
+    //   }
+    // });
   });
 });

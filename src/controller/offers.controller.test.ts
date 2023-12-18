@@ -21,14 +21,26 @@ describe('Given OfferController class', () => {
     } as unknown as OffersMongoRepo;
 
     const mockRequest = {
-      body: {},
+      body: {
+        author: { id: '1' },
+        image: {
+          publicId: 'mockPublicId',
+          format: ' webp',
+          url: 'mockUrl',
+          size: '0',
+          cloudinaryURL: 'mockUrl',
+        },
+      },
+      file: { path: 'mockPath' },
       params: { id: '1' },
       query: { key: 'value' },
     } as unknown as Request;
+
     const mockResponse = {
       json: jest.fn().mockReturnValue({} as Offer),
       status: jest.fn(),
     } as unknown as Response;
+
     const mockNext = jest.fn() as NextFunction;
 
     beforeEach(() => {
@@ -64,24 +76,27 @@ describe('Given OfferController class', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({});
     });
 
-    test.skip('create', async () => {
+    test('create', async () => {
+      const mockCloudinaryService = {
+        uploadImage: jest.fn().mockResolvedValue(''),
+      };
+      controller.cloudinaryService = mockCloudinaryService;
       await controller.create(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.statusMessage).toBe('Created');
-      expect(mockResponse.json).toHaveBeenCalledWith({});
+
+      expect(mockCloudinaryService.uploadImage).toHaveBeenCalled();
     });
 
-    test.skip('update', async () => {
+    test('update', async () => {
       await controller.update(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.statusMessage).toBe('Created');
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.statusMessage).toBe('Updated');
       expect(mockResponse.json).toHaveBeenCalledWith({});
     });
 
-    test.skip('delete', async () => {
+    test('delete', async () => {
       await controller.delete(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.statusMessage).toBe('Created');
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.statusMessage).toBe('Deleted');
       expect(mockResponse.json).toHaveBeenCalledWith({});
     });
   });

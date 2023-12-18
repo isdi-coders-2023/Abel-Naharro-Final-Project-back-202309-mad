@@ -44,6 +44,12 @@ describe('Given UserController class', () => {
       expect(mockResponse.statusMessage).toBe('Accepted');
       // Expect(mockResponse.json).toHaveBeenCalledWith({};)
     });
+    test('Then login with userId should...', async () => {
+      mockRequest.body.userId = '1';
+      await controller.login(mockRequest, mockResponse, mockNext);
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.statusMessage).toBe('Accepted');
+    });
     test('Then create should...', async () => {
       await controller.create(mockRequest, mockResponse, mockNext);
       expect(mockResponse.status).toHaveBeenCalledWith(201);

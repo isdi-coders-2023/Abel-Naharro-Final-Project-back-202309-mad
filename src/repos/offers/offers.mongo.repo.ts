@@ -40,23 +40,23 @@ export class OffersMongoRepo {
   async create(offer: Omit<Offer, 'id'>): Promise<Offer> {
     debugServer('Repo create:', offer);
 
-    try {
-      const userID = offer.author.id;
+    // Try {
+    const userID = offer.author.id;
 
-      if (!userID) {
-        throw new HttpError(400, 'Bad Request', 'Author ID is missing');
-      }
-
-      const result: Offer = await OfferModel.create({
-        ...offer,
-        author: userID,
-      });
-
-      return result;
-    } catch (error) {
-      console.error('Error in create method:', error);
-      throw error;
+    if (!userID) {
+      throw new HttpError(400, 'Bad Request', 'Author ID is missing');
     }
+
+    const result: Offer = await OfferModel.create({
+      ...offer,
+      author: userID,
+    });
+
+    return result;
+    // } catch (error) {
+    //   console.log('Error in create method:', error);
+    //   throw error;
+    // }
   }
 
   async update(id: string, updatedItem: Partial<Offer>): Promise<Offer> {
