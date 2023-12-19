@@ -6,7 +6,6 @@ import { CloudinaryMediaFiles } from '../services/cloudinary.media.files.js';
 
 const debugServer = createDebug('LOG:CONTROLLER:OFFERS');
 
-jest.mock('../services/cloudinary.media.files.js');
 export class OffersController {
   cloudinaryService: CloudinaryMediaFiles;
 
