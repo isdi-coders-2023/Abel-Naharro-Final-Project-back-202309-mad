@@ -3,6 +3,7 @@ import createDebug from 'debug';
 import express from 'express';
 import morgan from 'morgan';
 import { usersRouter } from './router/users.router.js';
+import { offersRouter } from './router/offers.router.js';
 import { errorMiddleware } from './middleware/error.middleware.js';
 
 const debugServer = createDebug('LOG:APP');
@@ -15,5 +16,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/user', usersRouter);
+app.use('/offer', offersRouter);
 
 app.use(errorMiddleware);

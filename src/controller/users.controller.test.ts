@@ -9,6 +9,7 @@ jest.mock('../services/auth.js');
 describe('Given UserController class', () => {
   let controller: UsersController;
   const mockRepo = {
+    getById: jest.fn().mockResolvedValue({}),
     login: jest.fn().mockResolvedValue({}),
     create: jest.fn().mockResolvedValue({}),
   } as unknown as UsersMongoRepo;
@@ -29,11 +30,24 @@ describe('Given UserController class', () => {
   });
 
   describe('When we instantiate it without errors', () => {
+    test('Then getById should...', async () => {
+      mockRequest.params.id = '1';
+      await controller.getById(mockRequest, mockResponse, mockNext);
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.statusMessage).toBe('Accepted');
+      expect(mockResponse.json).toHaveBeenCalledWith({});
+    });
+
     test('Then login should...', async () => {
       await controller.login(mockRequest, mockResponse, mockNext);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.statusMessage).toBe('Accepted');
-      // Expect(mockResponse.json).toHaveBeenCalledWith({};)
+    });
+    test('Then login with userId should...', async () => {
+      mockRequest.body.userId = '1';
+      await controller.login(mockRequest, mockResponse, mockNext);
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.statusMessage).toBe('Accepted');
     });
     test('Then create should...', async () => {
       await controller.create(mockRequest, mockResponse, mockNext);
@@ -46,8 +60,8 @@ describe('Given UserController class', () => {
   describe('When we instantiate it with errors', () => {
     let mockError = {} as unknown as HttpError;
 
-    // Const mockError = new Error('Bad Request');
     const mockRepoError = {
+      getById: jest.fn().mockRejectedValue({}),
       login: jest.fn().mockRejectedValue({}),
       create: jest.fn().mockRejectedValue({}),
     } as unknown as UsersMongoRepo;
@@ -56,11 +70,19 @@ describe('Given UserController class', () => {
     const res: Response = {} as Response;
     const next = jest.fn() as NextFunction;
 
+    test('Then getById should error...', async () => {
+      mockError = new HttpError(400, 'Bad Request');
+      req.params = { id: '' };
+      await controller.getById(req, res, next);
+      expect(next).toHaveBeenCalledWith(mockError);
+    });
+
     test('Then login should error...', async () => {
       mockError = new HttpError(400, 'Bad Request');
       await controller.login(req, res, next);
       expect(next).toHaveBeenCalledWith(mockError);
     });
+
     test('Then the create without request body param should', async () => {
       await controller.create(req, res, next);
       expect(next).toHaveBeenCalledWith(mockError);

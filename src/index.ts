@@ -4,7 +4,7 @@ import createDebug from 'debug';
 import { dbConnect } from './services/db.connect.js';
 
 const debugServer = createDebug('LOG:INDEX');
-const PORT = 3030; // Process.env.PORT || 3030;
+const PORT = 3030;
 const server = createServer(app);
 
 dbConnect()

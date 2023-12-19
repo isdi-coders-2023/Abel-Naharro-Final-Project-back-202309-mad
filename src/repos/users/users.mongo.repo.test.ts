@@ -3,9 +3,9 @@ import { UserModel } from './users.mongo.model.js';
 import { LoginUser, User } from '../../entities/user';
 import { Auth } from '../../services/auth';
 import { HttpError } from '../../types/http.error';
-// Import { HttpError } from '../../types/http.error';
 
 jest.mock('./users.mongo.model.js');
+jest.mock('../../services/auth');
 
 describe('Given UserRepo class', () => {
   let repo: UsersMongoRepo;
@@ -16,13 +16,23 @@ describe('Given UserRepo class', () => {
       const mockQueryMethod = jest.fn().mockReturnValue({
         exec,
       });
+      const mockQueryMethodFindById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue({} as User),
+      });
       UserModel.findOne = mockQueryMethod;
       UserModel.create = jest.fn().mockResolvedValue('Created');
+      UserModel.findById = mockQueryMethodFindById;
 
       Auth.hash = jest.fn().mockResolvedValue('testHash');
       Auth.compare = jest.fn().mockResolvedValue(true);
 
       repo = new UsersMongoRepo();
+    });
+
+    test('Then it should execute getById', async () => {
+      const result = await repo.getById('testId');
+      expect(UserModel.findById).toHaveBeenCalled();
+      expect(result).toEqual({});
     });
 
     test('Then it should execute login', async () => {
@@ -39,16 +49,24 @@ describe('Given UserRepo class', () => {
     });
   });
   describe('When we instantiate it with errors', () => {
-    const exec = jest.fn().mockResolvedValue(false);
     beforeEach(() => {
       const mockQueryMethod = jest.fn().mockReturnValue({
-        exec,
+        exec: jest.fn().mockResolvedValue(false),
       });
+      const mockQueryMethodFindById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      });
+
       UserModel.findOne = mockQueryMethod;
+      UserModel.findById = mockQueryMethodFindById;
 
       Auth.hash = jest.fn().mockResolvedValue('testHash');
       Auth.compare = jest.fn().mockResolvedValue(false);
       repo = new UsersMongoRepo();
+    });
+
+    test('Then it should execute with fail getById', async () => {
+      await expect(repo.getById('')).rejects.toThrow();
     });
     test('Then it should execute with fail login', async () => {
       const loginUser = {} as unknown as LoginUser;
