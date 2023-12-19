@@ -2,7 +2,7 @@ import { AuthInterceptor } from '../middleware/auth.interceptor.js';
 import { NextFunction, Request, Response } from 'express';
 import { TokenPayload, Auth } from '../services/auth.js';
 import { HttpError } from '../types/http.error.js';
-import { OffersMongoRepo } from '../repos/offers/offers.mongo.repo.js';
+
 import { Offer } from '../entities/offer.js';
 
 jest.mock('../repos/offers/offers.mongo.repo.js');
@@ -65,18 +65,5 @@ describe('AuthInterceptor', () => {
       await interceptor.authentication(mockRequest, mockResponse, mockNext);
       expect(mockNext).toHaveBeenCalled();
     });
-
-    // Test.skip('should handle invalid authentication', async () => {
-    //   const mockRepo = {
-    //     getById: jest.fn().mockRejectedValue({ author: { id: '2' } }),
-    //   } as unknown as OffersMongoRepo;
-
-    //   await interceptor.authentication(mockRequest, mockResponse, mockNext);
-    //   expect(mockNext).toHaveBeenCalledWith(expect.any(HttpError));
-    //   expect(mockRepo.getById).toHaveBeenCalled();
-    //   expect(mockNext).rejects.toThrow(
-    //     new HttpError(401, 'Unauthorized', 'User not valid')
-    //   );
-    // });
   });
 });
