@@ -96,6 +96,41 @@ describe('Given OffersMongoRepo class', () => {
   });
 
   describe('When I call method with errors', () => {
+    test('getById', async () => {
+      const mockError = new HttpError(404, 'Not Found', 'Not possible');
+
+      OfferModel.findById = jest.fn().mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue(null),
+        }),
+      });
+
+      const mockIdOffer = 'unknown-id';
+      await expect(repo.getById(mockIdOffer)).rejects.toThrow(mockError);
+    });
+
+    test('getByCategory', async () => {
+      const mockError = new HttpError(404, 'Not Found', 'Not possible');
+
+      OfferModel.find = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      });
+
+      const mockIdOffer = 'unknown-category';
+      await expect(repo.getByCategory(mockIdOffer)).rejects.toThrow(mockError);
+    });
+
+    test('getByUser', async () => {
+      const mockError = new HttpError(404, 'Not Found', 'Not possible');
+
+      OfferModel.find = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      });
+
+      const mockIdOffer = 'unknown-user';
+      await expect(repo.getByUser(mockIdOffer)).rejects.toThrow(mockError);
+    });
+
     test('create without userID', async () => {
       const mockUserID = { author: {} } as unknown as Offer;
 
@@ -110,7 +145,7 @@ describe('Given OffersMongoRepo class', () => {
         expect(httpError.message).toBe('Author ID is missing');
       }
     });
-    test('update', async () => {
+    test('update not equal id', async () => {
       const mockIdOffer = '2';
       const mockUpdatedItem = { id: '2' };
 
@@ -125,27 +160,33 @@ describe('Given OffersMongoRepo class', () => {
         expect(httpError.message).toBe('Id not match');
       }
     });
+
+    test('update equal id', async () => {
+      const mockIdOfferId = '2';
+      const mockUpdatedItem = '2' as Partial<Offer>;
+      const mockError = new HttpError(404, 'Not Found', 'Update not possible');
+
+      OfferModel.findByIdAndUpdate = jest.fn().mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue(null),
+        }),
+      });
+
+      await expect(repo.update(mockIdOfferId, mockUpdatedItem)).rejects.toThrow(
+        mockError
+      );
+    });
+
     test('delete', async () => {
+      const mockError = new HttpError(404, 'Not Found', 'Delete not possible');
+
+      const exec = jest.fn().mockResolvedValueOnce(false);
       OfferModel.findByIdAndDelete = jest.fn().mockReturnValue({
-        exec: jest
-          .fn()
-          .mockRejectedValue(
-            new HttpError(404, 'Not Found', 'Delete not possible')
-          ),
+        exec,
       });
 
       const mockIdOffer = 'unknown-id';
-
-      try {
-        await repo.delete(mockIdOffer);
-        throw new HttpError(404, 'Not Found', 'Delete not possible');
-      } catch (error) {
-        const httpError = error as HttpError;
-        expect(httpError).toBeInstanceOf(HttpError);
-        expect(httpError.status).toBe(404);
-        expect(httpError.statusMessage).toBe('Not Found');
-        expect(httpError.message).toBe('Delete not possible');
-      }
+      await expect(repo.delete(mockIdOffer)).rejects.toThrow(mockError);
     });
   });
 });
