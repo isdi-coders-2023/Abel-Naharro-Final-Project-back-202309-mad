@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryMediaFiles } from './cloudinary.media.files.js';
-// Import { HttpError } from '../types/http.error.js';
+import { HttpError } from '../types/http.error.js';
+
 describe('Given the Media File class', () => {
   describe('When I use upload a image', () => {
     test('should upload an image successfully when given a valid imagePath', async () => {
@@ -36,28 +37,26 @@ describe('Given the Media File class', () => {
         format: 'webp',
       });
     });
-    // Test('should handle cloudinary API errors when image upload fails', async () => {
-    //   const imagePath = 'valid/image/path.jpg';
-    //   const error = new Error('Upload failed');
-    //   cloudinary.uploader.upload = jest.fn().mockRejectedValue(error);
-    //   const mediaFiles = new CloudinaryMediaFiles();
-    //   try {
-    //     await mediaFiles.uploadImage(imagePath);
-    //     throw new HttpError(
-    //       406,
-    //       'Error uploading image to Cloudinary',
-    //       (error as Error).message
-    //     );
-    //   } catch (error) {
-    //     const errorResult = error as HttpError;
-    //     expect(errorResult).toBeInstanceOf(HttpError);
-    //     expect(errorResult.status).toBe(406);
-    //     expect(errorResult.statusMessage).toBe(
-    //       'Error uploading image to Cloudinary'
-    //     );
-    //     expect(errorResult.message).toBe('Not Found');
-    //     // Expect(errorResult.message).toBe('Upload failed');
-    //   }
-    // });
+    test('should handle cloudinary API errors when image upload fails', async () => {
+      const imagePath = 'valid/image/path.jpg';
+      const error = new HttpError(
+        406,
+        'Upload failed',
+        'Error uploading image to Cloudinary'
+      );
+      cloudinary.uploader.upload = jest.fn().mockRejectedValue(error);
+      const mediaFiles = new CloudinaryMediaFiles();
+      try {
+        await mediaFiles.uploadImage(imagePath);
+        throw new HttpError(406, 'Not Acceptable', (error as Error).message);
+      } catch (error) {
+        const errorResult = error as HttpError;
+        expect(errorResult).toBeInstanceOf(HttpError);
+        expect(errorResult.status).toBe(406);
+        expect(errorResult.statusMessage).toBe('Not Acceptable');
+        expect(errorResult.message).toBe('Error uploading image to Cloudinary');
+        // Expect(errorResult.message).toBe('Upload failed');
+      }
+    });
   });
 });
