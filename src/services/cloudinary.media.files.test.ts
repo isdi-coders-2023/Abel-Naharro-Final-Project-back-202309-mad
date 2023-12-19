@@ -55,7 +55,6 @@ describe('Given the Media File class', () => {
         expect(errorResult.status).toBe(406);
         expect(errorResult.statusMessage).toBe('Not Acceptable');
         expect(errorResult.message).toBe('Error uploading image to Cloudinary');
-        // Expect(errorResult.message).toBe('Upload failed');
       }
     });
   });
